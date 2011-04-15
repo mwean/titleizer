@@ -24,7 +24,14 @@ module HarukiZaemon
 
       def titleize
         result = ""
-        self.gsub(/[_-]/, ' ').split(/( [:.;?!][ ] | (?:[ ]|^)["“] )/x).each do |s|
+        
+        # Replace _ or - with spaces if the string is concatenated without spaces 
+        if self.count(' ') > 0
+          string = self
+        else
+          string = self.gsub(/[_-]/, ' ')
+        end
+        string.split(/( [:.;?!][ ] | (?:[ ]|^)["“] | [-_] )/x).each do |s|
           s.gsub!(/ \b( [[:alpha:]] [[:lower:].'’]* )\b /x) do |w|
             # Skip words with inresult dots, e.g. "del.icio.us" or "example.com"
             (w =~ / [[:alpha:]] [.] [[:alpha:]] /x) ? w : w.capitalize

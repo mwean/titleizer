@@ -1,3 +1,6 @@
+# require "rubygems"
+# require "rspec"
+
 require File.dirname(__FILE__) + '/../../../lib/haruki_zaemon/titleizer/string.rb'
 require File.dirname(__FILE__) + '/../../../lib/titleizer'
 
@@ -26,6 +29,12 @@ describe String do
     %w{- _}.each do |punc|
       it "should convert '#{punc}' to spaces" do
         "a#{punc}title".titleize.should == "A Title"
+      end
+    end
+    
+    %w{- _}.each do |punc|
+      it "should not convert '#{punc}' to spaces within normal strings" do
+        "a title with a hyphenated#{punc}word".titleize.should == "A Title With a Hyphenated#{punc}Word"
       end
     end
 
